@@ -33,5 +33,5 @@ variable "my_keypair" {
 }
 
 variable "number_of_private_instances" {
-    description = "Amount of instances for my Private subnet"
+  description = "Amount of instances for my Private subnet"
 }
