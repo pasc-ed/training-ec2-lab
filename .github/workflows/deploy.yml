@@ -34,6 +34,7 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Get output for public server ip
+        id: terraform
         run: |
           public_server_ip=$(terraform output public_server_ip)
           echo $public_server_ip
