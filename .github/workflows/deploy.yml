@@ -50,7 +50,9 @@ jobs:
       #       ls -al
 
       - name: Show public server ip
-        run: echo "${{ steps.terraform-get-ip.outputs.public_server_ip }}"
+        run: |
+          echo "Testing public_server_ip"
+          echo "${{ steps.terraform-get-ip.outputs.public_server_ip }}"
 
       - name: scp ssh pipelines
         uses: cross-the-world/ssh-scp-ssh-pipelines@latest
