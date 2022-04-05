@@ -34,10 +34,9 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Get output for public server ip
-        id: terraform
+        id: terraform-get-ip
         run: |
-          public_server_ip=$(terraform output public_server_ip)
-          echo $public_server_ip
+          echo '::set-output name=public_server_ip::$(terraform output public_server_ip)'
 
       # - name: Configure server
       #   uses: appleboy/ssh-action@master
@@ -50,7 +49,7 @@ jobs:
       #       ls -al
 
       - name: Show public server ip
-        run: echo "${{ steps.terraform.outputs.public_server_ip }}"
+        run: echo "${{ steps.terraform-get-ip.outputs.public_server_ip }}"
 
       - name: scp ssh pipelines
         uses: cross-the-world/ssh-scp-ssh-pipelines@latest
