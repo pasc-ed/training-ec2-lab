@@ -44,7 +44,7 @@ jobs:
         with:
           host: ${{ steps.terraform-get-ip.outputs.public_server_ip }}
           username: ec2-user
-          key: 
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             whoami
             ls -al
