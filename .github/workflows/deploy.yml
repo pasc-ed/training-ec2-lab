@@ -6,6 +6,10 @@ on:
 jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
     steps:
       - name: git clone my repo
         uses: actions/checkout@v2
