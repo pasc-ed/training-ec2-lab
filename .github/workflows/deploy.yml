@@ -59,7 +59,7 @@ jobs:
           user: "ec2-user"
           key:  ${{ secrets.EC2_PRIVATE_KEY }}
           scp: |
-            ./files/ec2.py => /home/ec2-user/
+            ./files/monitoring.py => /home/ec2-user/
             ./files/job.sh => /home/ec2-user/
           last_ssh: |
             echo "Starting configuration"
