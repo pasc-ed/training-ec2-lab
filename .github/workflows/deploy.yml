@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: git clone my repo
-          uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: AWS authentication
         uses: aws-actions/configure-aws-credentials@v1
