@@ -33,13 +33,8 @@ jobs:
       - name: Run an apply
         run: terraform apply -auto-approve
 
-      - name: Terraform Output
-        id: terraform
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.12.13
-          tf_actions_subcommand: 'output'
-          tf_actions_working_dir: '.'
+      - name: Get output for public server ip
+        run: public_server_ip=$(terraform output test)
 
       # - name: Configure server
       #   uses: appleboy/ssh-action@master
@@ -56,7 +51,7 @@ jobs:
         env:
           LASTSSH: "Doing something after copying"
         with:
-          host: ${{ steps.terraform.outputs.tf_actions_output.public_server_ip.value }} 
+          host: ${{ steps.terraform.outputs.public_server_ip }} 
           user: "ec2-user"
           key:  ${{ secrets.EC2_PRIVATE_KEY }}
           scp: |
