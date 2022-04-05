@@ -35,7 +35,7 @@ jobs:
 
       - name: Get output for public server ip
         run: |
-          public_server_ip=$(terraform output test)
+          public_server_ip=$(terraform output public_server_ip)
           echo $public_server_ip
 
       # - name: Configure server
