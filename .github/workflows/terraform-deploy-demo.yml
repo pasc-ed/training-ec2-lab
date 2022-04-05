@@ -1,0 +1,24 @@
+name: Terraform deploy demo
+on:
+  push:
+    branches:
+      challenge-2-bonus
+jobs:
+  terraform-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git clone of my repo
+        uses: actions/checkout@v3
+
+      - name: AWS authentication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::686520628199:role/github-oidc
+          aws-region: eu-west-1
+          role-session-name: GithubDemoDeployment
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Init project
+        run: terraform init
