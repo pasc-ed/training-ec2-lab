@@ -59,7 +59,7 @@ jobs:
         env:
           LASTSSH: "Doing something after copying"
         with:
-          host: ${{ steps.terraform.outputs.public_server_ip }} 
+          host: ${{ steps.terraform-get-ip.outputs.public_server_ip }} 
           user: "ec2-user"
           key:  ${{ secrets.EC2_PRIVATE_KEY }}
           scp: |
