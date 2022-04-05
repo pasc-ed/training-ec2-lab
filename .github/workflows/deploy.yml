@@ -7,14 +7,15 @@ jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: git clone my repo
+          uses: actions/checkout@v2
+
       - name: AWS authentication
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::686520628199:role/github-oidc
           aws-region: eu-west-1
-
-      - name: git clone my repo
-        uses: actions/checkout@v2
+          role-session-name: GithubDeployment
 
       - name: TF ready to go
         uses: hashicorp/setup-terraform@v1
