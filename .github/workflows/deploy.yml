@@ -45,6 +45,7 @@ jobs:
           host: ${{ steps.terraform-get-ip.outputs.public_server_ip }}
           username: ec2-user
           key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: 22
           script: |
             whoami
             ls -al
@@ -62,6 +63,7 @@ jobs:
           host: ${{ steps.terraform-get-ip.outputs.public_server_ip }} 
           user: "ec2-user"
           key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: 22
           scp: |
             ./files/monitoring.py => /home/ec2-user/
             ./files/job.sh => /home/ec2-user/
