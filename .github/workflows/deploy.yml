@@ -68,4 +68,5 @@ jobs:
           last_ssh: |
             echo "Starting configuration"
             chmod +x /home/ec2-user/job.sh
-            (crontab -l ; echo "*/2 * * * * root /bin/sh /home/ec2-user/job.sh") | sort - | uniq - | crontab -
+
+# (crontab -l ; echo "*/2 * * * * root /bin/sh /home/ec2-user/job.sh") | sort - | uniq - | crontab -
