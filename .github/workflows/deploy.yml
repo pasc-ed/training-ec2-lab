@@ -1,0 +1,62 @@
+name: Terraform deployment with Github Actions
+on:
+  push:
+    branches:
+      test-role
+jobs:
+  terraform-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AWS authentication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::686520628199:role/github-oidc
+          aws-region: eu-west-1
+
+      - name: git clone my repo
+        uses: actions/checkout@v2
+
+      - name: TF ready to go
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Init our project
+        run: terraform init
+
+      - name: Run a plan
+        run: terraform plan
+
+      - name: Run an apply
+        run: terraform apply
+
+      - name: Terraform Output
+        id: terraform
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_subcommand: 'output'
+          tf_actions_working_dir: '.'
+
+      # - name: Configure server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ steps.terraform.outputs.tf_actions_output }} 
+      #     username: ${{ secrets.USERNAME }}
+      #     key:
+      #     script: |
+      #       whoami
+      #       ls -al
+
+      - name: scp ssh pipelines
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        env:
+          LASTSSH: "Doing something after copying"
+        with:
+          host: ${{ steps.terraform.outputs.tf_actions_output }} 
+          user: "ec2-user"
+          key:  ${{ secrets.EC2_PRIVATE_KEY }}
+          scp: |
+            ./files/ec2.py => /home/ec2-user/
+            ./files/job.sh => /home/ec2-user/
+          last_ssh: |
+            echo "Starting configuration"
+            chmod +x /home/ec2-user/job.sh
+            (crontab -l ; echo "*/2 * * * * root /bin/sh /home/ec2-user/job.sh") | sort - | uniq - | crontab -
