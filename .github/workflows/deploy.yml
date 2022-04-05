@@ -37,7 +37,7 @@ jobs:
         id: terraform-get-ip
         run: |
           public_server_ip=$(terraform output public_server_ip)
-          echo "::set-output name=public_server_ip::$(echo ${public_server_ip})"
+          echo ''::set-output name=public_server_ip::$(echo ${public_server_ip} | tr -d '"')'
 
       # - name: Configure server
       #   uses: appleboy/ssh-action@master
